@@ -403,7 +403,7 @@ class AppBrowser : AppCompatActivity() {
             ToSheets.logs.post(LogActions.LOGOUT.name, applicationContext)
             ToSheets.logs.updatePrependList(
                 listOf(
-                    "E203", BuildConfig.VERSION_CODE.toString(), DeviceInfo.get(
+                    "MasterTrack", BuildConfig.VERSION_CODE.toString(), DeviceInfo.get(
                         Device.UNIQUE_ID
                     ), ""
                 )
@@ -440,7 +440,7 @@ class AppBrowser : AppCompatActivity() {
         window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorPrimary)))
 
-        findViewById<TextView>(R.id.toolbar_Text1).text = "E203"
+        findViewById<TextView>(R.id.toolbar_Text1).text = "MasterTrack"
         try {
             var user =
                 LocalConfig.Singleton.instance.getValue(LocalConfig.Singleton.instance.USERNAME)

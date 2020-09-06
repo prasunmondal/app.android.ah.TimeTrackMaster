@@ -40,7 +40,7 @@ class WelcomeScreen : AppCompatActivity() {
 
         ToSheets.logs.updatePrependList(
             listOf(
-                "E203",
+                "MasterTrack",
                 BuildConfig.VERSION_CODE.toString(),
                 DeviceInfo.get(Device.UNIQUE_ID),
                 ""

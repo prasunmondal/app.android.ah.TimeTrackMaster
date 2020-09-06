@@ -33,14 +33,14 @@ class FileManagerUtil {
 ////        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZQ28x7jpdIOzT2PA6iTCTcyTHM9tVPkv2ezuqd4LFOWu9SJqImGM7ML8ejdQB01SdjfTZnoHogzUt/pub?gid=855055974&single=true&output=csv",
 //        "",
 //        AppContext.instance.initialContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString(), "", "calculatingSheet.csv",
-//        "E203", "fetching details data"
+//        "MasterTrack", "fetching details data"
 //    )
 
     var metadata = DownloadableFiles(
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZQ28x7jpdIOzT2PA6iTCTcyTHM9tVPkv2ezuqd4LFOWu9SJqImGM7ML8ejdQB01SdjfTZnoHogzUt/pub?gid=1321322233&single=true&output=csv",
         "",
         "metadata.csv",
-        "E203",
+        "MasterTrack",
         "fetching metadata",
         {},
         AppContext.instance.initialContext
@@ -49,7 +49,7 @@ class FileManagerUtil {
     var updateAPK = DownloadableFiles(
         "",
         "", "update.apk",
-        "E203", "downloading update", {},
+        "MasterTrack", "downloading update", {},
         AppContext.instance.initialContext
     )
 

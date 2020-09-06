@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='E203'
+rootProject.name='MasterTrack'

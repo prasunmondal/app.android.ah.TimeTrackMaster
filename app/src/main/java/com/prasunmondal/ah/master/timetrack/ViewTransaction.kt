@@ -159,7 +159,7 @@ class ViewTransaction : AppCompatActivity() {
         window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorPrimary)))
 
-        findViewById<TextView>(R.id.toolbar_Text1).text = "E203"
+        findViewById<TextView>(R.id.toolbar_Text1).text = "MasterTrack"
         findViewById<TextView>(R.id.toolbar_Text2).text = "View Details"
     }
 }

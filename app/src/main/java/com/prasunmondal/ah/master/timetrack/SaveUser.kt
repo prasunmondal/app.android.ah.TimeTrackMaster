@@ -29,7 +29,7 @@ class SaveUser : AppCompatActivity() {
             if (username != null && isValidUserName(username)) {
                 ToSheets.logs.updatePrependList(
                     listOf(
-                        "E203",
+                        "MasterTrack",
                         BuildConfig.VERSION_CODE.toString(),
                         DeviceInfo.get(Device.UNIQUE_ID),
                         username
@@ -56,7 +56,7 @@ class SaveUser : AppCompatActivity() {
         localConfigs.setValue("username", username)
         ToSheets.logs.updatePrependList(
             listOf(
-                "E203",
+                "MasterTrack",
                 BuildConfig.VERSION_CODE.toString(),
                 DeviceInfo.get(Device.UNIQUE_ID),
                 username
@@ -81,7 +81,7 @@ class SaveUser : AppCompatActivity() {
     fun onClickSaveUserSkipButton(view: View) {
         ToSheets.logs.updatePrependList(
             listOf(
-                "E203",
+                "MasterTrack",
                 BuildConfig.VERSION_CODE.toString(),
                 DeviceInfo.get(Device.UNIQUE_ID),
                 "Anonymous"

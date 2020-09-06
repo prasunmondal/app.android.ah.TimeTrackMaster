@@ -26,7 +26,7 @@ class ErrorHandle {
 
                         ToSheets.error.post(
                             listOf(
-                                "E203",
+                                "MasterTrack",
                                 BuildConfig.VERSION_CODE.toString(),
                                 DeviceInfo.get(Device.UNIQUE_ID),
                                 LocalConfig.Singleton.instance.getValue("username")!!,
