@@ -2,6 +2,7 @@ package com.prasunmondal.ah.master.timetrack
 
 import android.os.Environment
 import com.prasunmondal.ah.master.timetrack.sessionData.AppContext
+import com.prasunmondal.ah.master.timetrack.sessionData.HardData
 import com.prasunmondal.lib.android.downloadfile.DownloadableFiles
 import java.io.File
 
@@ -37,7 +38,7 @@ class FileManagerUtil {
 //    )
 
     var metadata = DownloadableFiles(
-        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZQ28x7jpdIOzT2PA6iTCTcyTHM9tVPkv2ezuqd4LFOWu9SJqImGM7ML8ejdQB01SdjfTZnoHogzUt/pub?gid=1321322233&single=true&output=csv",
+        HardData.Singleton.instance.client_serverURL_Metadata,
         "",
         "metadata.csv",
         "MasterTrack",

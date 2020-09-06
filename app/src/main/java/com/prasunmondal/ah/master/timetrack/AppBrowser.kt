@@ -29,15 +29,12 @@ import com.prasunmondal.ah.master.timetrack.SheetUtils.ToSheets
 import com.prasunmondal.ah.master.timetrack.Utility.LogActions
 import com.prasunmondal.ah.master.timetrack.Utility.PaymentUtil
 import com.prasunmondal.ah.master.timetrack.Utility.showSnackbar
-import com.prasunmondal.ah.master.timetrack.FileManagerUtil
 import com.prasunmondal.ah.master.timetrack.sessionData.AppContext
 import com.prasunmondal.ah.master.timetrack.sessionData.FetchedMetaData
 import com.prasunmondal.ah.master.timetrack.sessionData.HardData
 import com.prasunmondal.ah.master.timetrack.sessionData.LocalConfig
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import com.prasunmondal.ah.master.timetrack.BuildConfig
-import com.prasunmondal.ah.master.timetrack.R
 import com.prasunmondal.lib.android.deviceinfo.Device
 import com.prasunmondal.lib.android.deviceinfo.DeviceInfo
 import kotlinx.android.synthetic.main.activity_app_browser.*
@@ -67,7 +64,7 @@ class AppBrowser : AppCompatActivity() {
         webView.settings.loadWithOverviewMode = true
         webView.webViewClient = WebViewClient()
         webView.webChromeClient = WebChromeClient()
-        loadPage(HardData.Singleton.instance.submitFormURL)
+        loadPage(HardData.Singleton.instance.client_submitFormURL)
 
         AppContext.instance.initialContext = this
 
@@ -126,7 +123,7 @@ class AppBrowser : AppCompatActivity() {
 
     fun loadAddForm(view: View) {
         ToSheets.logs.post(listOf(LogActions.CLICKED.name, "Add Expense"), applicationContext)
-        loadPage(HardData.Singleton.instance.submitFormURL)
+        loadPage(HardData.Singleton.instance.client_submitFormURL)
     }
 
     fun loadDetails(view: View) {
@@ -137,7 +134,7 @@ class AppBrowser : AppCompatActivity() {
 
     fun loadEditPage(view: View) {
         ToSheets.logs.post(listOf(LogActions.CLICKED.name, "Edit Page"), applicationContext)
-        loadPage(HardData.Singleton.instance.editPage)
+        loadPage(HardData.Singleton.instance.client_editPage)
         Toast.makeText(this, "Fetching Data. Please Wait...", Toast.LENGTH_SHORT).show()
     }
 
