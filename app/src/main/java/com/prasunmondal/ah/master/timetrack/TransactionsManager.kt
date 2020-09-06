@@ -7,4 +7,5 @@ class TransactionsManager {
     }
 
     var transactions = mutableListOf<TransactionRecord>()
+    var customers = mutableListOf<String>()
 }

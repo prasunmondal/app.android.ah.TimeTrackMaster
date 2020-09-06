@@ -41,11 +41,8 @@ class FileReadUtil {
         }
     }
 
-    fun printCSVfile(
-        fileName: FilePaths
-    ) {
-
-        TransactionsManager.Singleton.instance.transactions.clear()
+    fun printCSVfile(fileName: FilePaths) {
+        TransactionsManager.Singleton.instance.customers.clear()
         try {
             val reader = CSVReader(FileReader(File(fileName.destination)))
             var nextLine: Array<String>
@@ -78,17 +75,13 @@ class FileReadUtil {
                     newRecord.totalCost = nextLine[10]
                     newRecord.rate = nextLine[9]
 
-
-
-//                    if (newRecord.transactionType == "DEBIT")
-//                        newRecord.totalCost = nextLine[11]
-//                    else
-//                        newRecord.rate = nextLine[11]
-
-                    if (newRecord.recordGenerationTime.isNotEmpty())
+                    if (newRecord.recordGenerationTime.isNotEmpty()) {
                         TransactionsManager.Singleton.instance.transactions.add(newRecord)
+                        TransactionsManager.Singleton.instance.customers.add(newRecord.customerName)
+                    }
                 }
             }
+//            TransactionsManager.Singleton.instance.customers.sorted()
         } catch (e: IOException) {
             throw (e)
         }

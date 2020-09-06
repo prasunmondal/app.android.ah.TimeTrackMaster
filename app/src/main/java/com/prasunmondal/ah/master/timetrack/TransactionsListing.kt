@@ -17,10 +17,7 @@ import android.view.Gravity
 import android.view.Gravity.END
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.LinearLayout
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.prasunmondal.ah.master.timetrack.ErrorReporting.ErrorHandle
@@ -34,7 +31,6 @@ import com.prasunmondal.lib.android.downloadfile.DownloadableFiles
 import kotlinx.android.synthetic.main.activity_transactions_listing.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import kotlin.math.abs
 import com.prasunmondal.ah.master.timetrack.FileManagerUtil.Singleton.instance as fm
 
 class TransactionRecord {
@@ -97,6 +93,8 @@ class TransactionsListing : AppCompatActivity() {
 
     private var current_showDecimal = false
 
+    private var customerList = mutableListOf<String>()
+
     val breakdownSheet = DownloadableFiles(
         FetchedMetaData.Singleton.instance.getValue(FetchedMetaData.Singleton.instance.TAG_BREAKDOWN_URL)!!,
         "",
@@ -113,7 +111,6 @@ class TransactionsListing : AppCompatActivity() {
 
         ToSheets.logs.post(listOf(LogActions.CLICKED.name, "Open Breakview"), applicationContext)
         Tabs.Singleton.instance.activeTab = Tabs.Singleton.instance.Tab_MyTransaction
-        attachLisenerToCustomerSelector()
 
         if (breakdownSheet.doesExist()) {
             initDisplay()
@@ -141,11 +138,17 @@ class TransactionsListing : AppCompatActivity() {
         linearLayout.addView(sharedBy)
         Tabs.Singleton.instance.activeTab = Tabs.Singleton.instance.Tab_MyTransaction
 
-        breakdownSheet.download(::startDisplay)
+        breakdownSheet.download(::onDataFetchComplete)
         ToSheets.logs.post(
             listOf(LogActions.DOWNLOAD_START.name, "Breakview data"),
             applicationContext
         )
+        attachLisenerToCustomerSelector()
+    }
+
+    private fun onDataFetchComplete() {
+        populateSuctomerSpinner()
+        startDisplay()
     }
 
     private fun attachLisenerToCustomerSelector() {
@@ -167,11 +170,12 @@ class TransactionsListing : AppCompatActivity() {
 
     private var displayStarted = false
     private fun startDisplay() {
-        if (!displayStarted)
+        if (!displayStarted) {
             ToSheets.logs.post(
                 listOf(LogActions.DOWNLOAD_COMPLETE.name, "Breakview data"),
                 applicationContext
             )
+        }
         displayStarted = true
         fetchDatafromFile()
         TransactionsManager.Singleton.instance.transactions.reverse()
@@ -183,6 +187,17 @@ class TransactionsListing : AppCompatActivity() {
                 "Breakview:show:: ::With fetched data"
             ), applicationContext
         )
+    }
+
+    private fun populateSuctomerSpinner() {
+        var dropdown = findViewById<Spinner>(R.id.breakdownviewCustNameSelection)
+
+        var list = mutableListOf("All")
+        list.addAll(TransactionsManager.Singleton.instance.customers)
+        val dataAdapter =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, list)
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        dropdown.adapter = dataAdapter
     }
 
     private fun initDisplay() {
