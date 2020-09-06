@@ -37,13 +37,13 @@ import com.prasunmondal.ah.master.timetrack.FileManagerUtil.Singleton.instance a
 class TransactionRecord {
 
     lateinit var name: String
-    lateinit var item: String
-    lateinit var sharedBy: String
+    lateinit var customerName: String
+    lateinit var contactNo: String
     lateinit var qty: String
     lateinit var price: String
     lateinit var createTime: String
     lateinit var time: String
-    lateinit var editLink: String
+    lateinit var transactionType: String
     lateinit var userDebit: String
     lateinit var userCredit: String
 }
@@ -374,7 +374,7 @@ class TransactionsListing : AppCompatActivity() {
 
 
         serialNoField.text = "$serialNo."
-        itemNameField.text = transaction.item
+        itemNameField.text = transaction.customerName
         showPrices_textNColor(price1, transaction, price1_getText(tabType, transaction))
         showPrices_textNColor(price2, transaction, price2_getText(tabType, transaction))
         recordOriginDetailsField.text =
@@ -382,9 +382,9 @@ class TransactionsListing : AppCompatActivity() {
         if (current_cardType == cardType_minimal)
             sharedBy.text = ""
         else if (current_cardType == cardType_relevant)
-            sharedBy.text = get1word(transaction.sharedBy)
+            sharedBy.text = get1word(transaction.contactNo)
         else
-            sharedBy.text = transaction.time + " . " + get1word(transaction.sharedBy)
+            sharedBy.text = transaction.time + " . " + get1word(transaction.contactNo)
 
 
         val llh1 = LinearLayout(applicationContext)
@@ -449,7 +449,7 @@ class TransactionsListing : AppCompatActivity() {
     }
 
     private fun isDebitTransaction(transaction: TransactionRecord): Boolean {
-        return transaction.sharedBy.contains(username) || transaction.sharedBy.contains("All")
+        return transaction.contactNo.contains(username) || transaction.contactNo.contains("All")
     }
 
     private fun showAll(transaction: TransactionRecord): Boolean {
@@ -591,12 +591,12 @@ class TransactionsListing : AppCompatActivity() {
 
             sortTag_itemName_Asc -> {
                 fetchDatafromFile()
-                TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.item.toLowerCase() }
+                TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.customerName.toLowerCase() }
             }
             sortTag_itemName_Desc -> {
                 fetchDatafromFile()
                 TransactionsManager.Singleton.instance.transactions.reverse()
-                TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.item.toLowerCase() }
+                TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.customerName.toLowerCase() }
                 TransactionsManager.Singleton.instance.transactions.reverse()
             }
         }

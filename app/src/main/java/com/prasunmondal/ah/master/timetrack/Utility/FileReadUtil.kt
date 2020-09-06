@@ -70,35 +70,35 @@ class FileReadUtil {
             while (reader.peek() != null && lineToRead < maxLines) {
                 lineToRead++
                 nextLine = reader.readNext()
+//
+//                if (nextLine[0] == "start") {
+//                    startLine = lineToRead + 2
+//                    for (i in 0..nextLine.size - 1) {
+//                        if (nextLine[i] == "app_name")
+//                            nameIndex = i
+//                        if (nextLine[i] == "app_item")
+//                            itemIndex = i
+//                        if (nextLine[i] == "app_sharedBy")
+//                            sharedByIndex = i
+//                        if (nextLine[i] == "app_qty")
+//                            qtyIndex = i
+//                        if (nextLine[i] == "app_price")
+//                            priceIndex = i
+//                        if (nextLine[i] == "app_createTime")
+//                            createTimeIndex = i
+//                        if (nextLine[i] == "app_time")
+//                            timeIndex = i
+//                        if (nextLine[i] == "app_editLink")
+//                            editLinkIndex = i
+//                        if (nextLine[i] == user + "_debit")
+//                            userDebitIndex = i
+//                        if (nextLine[i] == user + "_credit")
+//                            userCreditIndex = i
+//                    }
+//                }
 
-                if (nextLine[0] == "start") {
-                    startLine = lineToRead + 2
-                    for (i in 0..nextLine.size - 1) {
-                        if (nextLine[i] == "app_name")
-                            nameIndex = i
-                        if (nextLine[i] == "app_item")
-                            itemIndex = i
-                        if (nextLine[i] == "app_sharedBy")
-                            sharedByIndex = i
-                        if (nextLine[i] == "app_qty")
-                            qtyIndex = i
-                        if (nextLine[i] == "app_price")
-                            priceIndex = i
-                        if (nextLine[i] == "app_createTime")
-                            createTimeIndex = i
-                        if (nextLine[i] == "app_time")
-                            timeIndex = i
-                        if (nextLine[i] == "app_editLink")
-                            editLinkIndex = i
-                        if (nextLine[i] == user + "_debit")
-                            userDebitIndex = i
-                        if (nextLine[i] == user + "_credit")
-                            userCreditIndex = i
-                    }
-                }
 
-
-                if (lineToRead >= startLine) {
+                if (lineToRead > 1) {
                     print(
                         nextLine[nameIndex] + " - " + nextLine[itemIndex] + " - " + nextLine[sharedByIndex] + " - " + nextLine[qtyIndex] + " - " +
                                 nextLine[priceIndex] + " - " + nextLine[createTimeIndex] + " - " + nextLine[timeIndex] + " - " + nextLine[editLinkIndex]
@@ -106,21 +106,21 @@ class FileReadUtil {
                     )
 
                     val newRecord = TransactionRecord()
-                    newRecord.name = nextLine[nameIndex]
-                    newRecord.item = nextLine[itemIndex]
-                    newRecord.sharedBy = nextLine[sharedByIndex]
-                    newRecord.qty = nextLine[qtyIndex].replace(",", "")
-                    newRecord.price = nextLine[priceIndex].replace(",", "")
-                    newRecord.createTime = nextLine[createTimeIndex]
-                    newRecord.time = nextLine[timeIndex]
-                    newRecord.editLink = nextLine[editLinkIndex]
-                    newRecord.userDebit = nextLine[userDebitIndex].replace(",", "")
-                    newRecord.userCredit = nextLine[userCreditIndex].replace(",", "")
+                    newRecord.name = nextLine[2]
+                    newRecord.customerName = nextLine[3]
+                    newRecord.contactNo = nextLine[4]
+                    newRecord.qty = nextLine[5]
+                    newRecord.price = nextLine[9]
+                    newRecord.createTime = nextLine[1]
+                    newRecord.time = nextLine[0]
+                    newRecord.transactionType = nextLine[10]
+                    newRecord.userDebit = "0"
+                    newRecord.userCredit = "0"
 
-                    if (newRecord.userDebit.isEmpty())
-                        newRecord.userDebit = "0"
-                    if (newRecord.userCredit.isEmpty())
-                        newRecord.userCredit = "0"
+                    if (newRecord.transactionType == "DEBIT")
+                        newRecord.userDebit = nextLine[11]
+                    else
+                        newRecord.userCredit = nextLine[11]
 
                     if (newRecord.createTime.isNotEmpty())
                         TransactionsManager.Singleton.instance.transactions.add(newRecord)

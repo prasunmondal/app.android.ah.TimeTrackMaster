@@ -37,15 +37,15 @@ class ViewTransaction : AppCompatActivity() {
 
         ToSheets.logs.post(
             listOf(
-                LogActions.CLICKED.name, "Viewing Details:\n" + lc.viewTransaction.item
+                LogActions.CLICKED.name, "Viewing Details:\n" + lc.viewTransaction.customerName
                         + " qty: " + lc.viewTransaction.qty
                         + " price: " + lc.viewTransaction.price
-                        + " editURL: " + lc.viewTransaction.editLink
+                        + " editURL: " + lc.viewTransaction.transactionType
             ),
             this.applicationContext
         )
 
-        findViewById<TextView>(R.id.details_itemname).text = "Item Name: " + lc.viewTransaction.item
+        findViewById<TextView>(R.id.details_itemname).text = "Item Name: " + lc.viewTransaction.customerName
 
         findViewById<TextView>(R.id.details_qty).text = "Quantity: " + lc.viewTransaction.qty
 
@@ -53,7 +53,7 @@ class ViewTransaction : AppCompatActivity() {
             "Total Price: ₹ " + lc.viewTransaction.price
 
         findViewById<TextView>(R.id.details_sharedBy).text =
-            "Shared By: " + get1word(lc.viewTransaction.sharedBy)
+            "Shared By: " + get1word(lc.viewTransaction.contactNo)
 
         findViewById<TextView>(R.id.details_addedBy).text =
             "added: " + lc.viewTransaction.name + "  (" + lc.viewTransaction.createTime + ")"
@@ -85,7 +85,7 @@ class ViewTransaction : AppCompatActivity() {
 
         supportActionBar!!.setDisplayShowTitleEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
-        loadPage(lc.viewTransaction.editLink)
+        loadPage(lc.viewTransaction.transactionType)
     }
 
     @SuppressLint("SetTextI18n")
