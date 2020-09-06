@@ -18,7 +18,7 @@
         android:dropDownWidth="match_parent"
         android:duplicateParentState="false"
         android:ems="10"
-        android:entries="@array/member_names"
+        android:entries="@array/none"
         android:forceDarkAllowed="true"
         android:pointerIcon="zoom_in"
         android:popupBackground="#CDD3D8"

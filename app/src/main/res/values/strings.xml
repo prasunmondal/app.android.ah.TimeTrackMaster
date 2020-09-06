@@ -4,7 +4,12 @@
     <string name="updateAvailable">New Version Available...</string>
 
     <string-array name="member_names">
+        <item>Prasun Mondal</item>
     </string-array>
+
+    <string-array name="none">
+    </string-array>
+
     <string name="title_activity_transactions_listing">TransactionsListing</string>
     <string name="title_activity_app_browser">AppBrowser</string>
     <string name="title_activity_view_transaction">ViewTransaction</string>
