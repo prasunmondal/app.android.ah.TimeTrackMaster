@@ -234,13 +234,13 @@ class TransactionsListing : AppCompatActivity() {
                     totalString = "All Transaction:  "
                 }
                 Tabs.Singleton.instance.Tab_MyExpenses -> {
-                    totalString = "Your Expenses:  "
+                    totalString = "Total Debit:  "
                 }
                 Tabs.Singleton.instance.Tab_MySpent -> {
-                    totalString = "You Spent:  "
+                    totalString = "Total Credit:  "
                 }
                 Tabs.Singleton.instance.Tab_MyTransaction -> {
-                    totalString = "Outstanding Bal.  "
+                    totalString = "Total Balance.  "
                 }
             }
             totalField2.text =

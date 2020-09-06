@@ -18,21 +18,23 @@
         app:layout_constraintStart_toStartOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/tabAll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            android:gravity="center"
+            android:onClick="tabShowall"
+            android:padding="6dp"
+            android:text="All"
+            android:textColor="@color/tabs_text_inactive" />
+
         <LinearLayout
             android:id="@+id/tabView_tabMyTransactions"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tabMyTransactions"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:onClick="tabMytransaction"
-                android:padding="6dp"
-                android:text="My Transactions"
-                android:textColor="@color/tabs_text_inactive" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,11 +46,12 @@
             <TextView
                 android:id="@+id/tabExpenses"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="6dp"
+                android:gravity="center"
                 android:onClick="tabMyexpenses"
                 android:padding="6dp"
-                android:text="Expenses"
+                android:text="Debit"
                 android:textColor="@color/tabs_text_inactive" />
 
         </LinearLayout>
@@ -62,11 +65,12 @@
             <TextView
                 android:id="@+id/tabSpent"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="6dp"
+                android:gravity="center"
                 android:onClick="tabMyspent"
                 android:padding="6dp"
-                android:text="Spent"
+                android:text="Credit"
                 android:textColor="@color/tabs_text_inactive" />
         </LinearLayout>
 
@@ -76,17 +80,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tabAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:onClick="tabShowall"
-                android:padding="6dp"
-                android:text="All"
-                android:textColor="@color/tabs_text_inactive" />
-
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tabMyTransactions"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="tabMytransaction"
+            android:padding="6dp"
+            android:text="All Transactions"
+            android:textColor="@color/tabs_text_inactive" />
 
         <LinearLayout
             android:id="@+id/tabView_tabMore"
@@ -98,7 +102,10 @@
                 android:id="@+id/tabMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginStart="6dp"
+                android:foregroundGravity="center"
+                android:gravity="center"
                 android:padding="6dp"
                 android:text="☯"
                 android:textColor="@color/tabs_text_inactive" />
