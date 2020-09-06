@@ -8,10 +8,30 @@
     tools:context=".TransactionsListing"
     tools:showIn="@layout/activity_transactions_listing">
 
+    <Spinner
+        android:id="@+id/breakdownviewCustNameSelection"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:backgroundTint="#01111B"
+        android:ems="10"
+        android:entries="@array/member_names"
+        android:fadingEdge="horizontal|vertical"
+        android:forceDarkAllowed="true"
+        android:popupBackground="#ffffff"
+        android:prompt="@string/app_name"
+        android:spinnerMode="dropdown"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#C2CBCC"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="37dp"
+        android:layout_marginTop="30dp"
         android:background="@color/breakdown_tabsBackground"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/scrollView2"
@@ -27,15 +47,27 @@
             android:onClick="tabShowall"
             android:padding="6dp"
             android:text="All"
-            android:textColor="@color/tabs_text_inactive" />
+            android:textColor="@color/tabs_text_inactive"
+            android:visibility="invisible" />
 
         <LinearLayout
             android:id="@+id/tabView_tabMyTransactions"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tabMyTransactions"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="tabMytransaction"
+            android:padding="6dp"
+            android:text="All Transactions"
+            android:textColor="@color/tabs_text_inactive" />
 
         <LinearLayout
             android:id="@+id/tabView_tabExpenses"
@@ -81,16 +113,6 @@
             android:orientation="vertical">
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tabMyTransactions"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:onClick="tabMytransaction"
-            android:padding="6dp"
-            android:text="All Transactions"
-            android:textColor="@color/tabs_text_inactive" />
 
         <LinearLayout
             android:id="@+id/tabView_tabMore"

@@ -17,7 +17,9 @@ import android.view.Gravity
 import android.view.Gravity.END
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -61,6 +63,7 @@ class Tabs {
     val tabViewID_showAll = R.id.tabAll
 
     var activeTab = Tab_MyTransaction
+    var activeCustomer = "All"
 
     object Singleton {
         var instance = Tabs()
@@ -110,7 +113,7 @@ class TransactionsListing : AppCompatActivity() {
 
         ToSheets.logs.post(listOf(LogActions.CLICKED.name, "Open Breakview"), applicationContext)
         Tabs.Singleton.instance.activeTab = Tabs.Singleton.instance.Tab_MyTransaction
-
+        attachLisenerToCustomerSelector()
 
         if (breakdownSheet.doesExist()) {
             initDisplay()
@@ -143,6 +146,23 @@ class TransactionsListing : AppCompatActivity() {
             listOf(LogActions.DOWNLOAD_START.name, "Breakview data"),
             applicationContext
         )
+    }
+
+    private fun attachLisenerToCustomerSelector() {
+        var dropdown = findViewById<Spinner>(R.id.breakdownviewCustNameSelection)
+
+        dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                pos: Int,
+                id: Long
+            ) {
+                Tabs.Singleton.instance.activeCustomer = dropdown.selectedItem.toString()
+                startDisplay()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 
     private var displayStarted = false
@@ -446,19 +466,27 @@ class TransactionsListing : AppCompatActivity() {
     private val username = LocalConfig.Singleton.instance.getValue("username")!!
 
     private fun isCreditTransaction(transaction: TransactionRecord): Boolean {
-        return transaction.transactionType == "CREDIT"
+        if(Tabs.Singleton.instance.activeCustomer == "All" || transaction.customerName == Tabs.Singleton.instance.activeCustomer)
+            return transaction.transactionType == "CREDIT"
+        return false
     }
 
     private fun isDebitTransaction(transaction: TransactionRecord): Boolean {
-        return transaction.transactionType == "DEBIT"
+        if(Tabs.Singleton.instance.activeCustomer == "All" || transaction.customerName == Tabs.Singleton.instance.activeCustomer)
+            return transaction.transactionType == "DEBIT"
+        return false
     }
 
     private fun showAll(transaction: TransactionRecord): Boolean {
-        return true
+        if(Tabs.Singleton.instance.activeCustomer == "All" || transaction.customerName == Tabs.Singleton.instance.activeCustomer)
+            return true
+        return false
     }
 
     private fun isMyTransactions(transaction: TransactionRecord): Boolean {
-        return isCreditTransaction(transaction) || isDebitTransaction(transaction)
+        if(Tabs.Singleton.instance.activeCustomer == "All" || transaction.customerName == Tabs.Singleton.instance.activeCustomer)
+            return isCreditTransaction(transaction) || isDebitTransaction(transaction)
+        return false
     }
 
     fun tabShowall(view: View) {
