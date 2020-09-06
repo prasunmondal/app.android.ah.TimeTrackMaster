@@ -438,14 +438,14 @@ class AppBrowser : AppCompatActivity() {
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorPrimary)))
 
         findViewById<TextView>(R.id.toolbar_Text1).text = "MasterTrack"
-        try {
-            var user =
-                LocalConfig.Singleton.instance.getValue(LocalConfig.Singleton.instance.USERNAME)
-            if (user!!.isNotEmpty())
-                findViewById<TextView>(R.id.toolbar_Text2).text = "- " + user
-        } catch (e: Exception) {
-            findViewById<TextView>(R.id.toolbar_Text2).text = "Anonymous"
-        }
+//        try {
+//            var user =
+//                LocalConfig.Singleton.instance.getValue(LocalConfig.Singleton.instance.USERNAME)
+//            if (user!!.isNotEmpty())
+//                findViewById<TextView>(R.id.toolbar_Text2).text = " " + user
+//        } catch (e: Exception) {
+//            findViewById<TextView>(R.id.toolbar_Text2).text = "Anonymous"
+//        }
     }
 }
 

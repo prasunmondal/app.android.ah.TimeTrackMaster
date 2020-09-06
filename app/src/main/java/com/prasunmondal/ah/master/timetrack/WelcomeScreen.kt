@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.prasunmondal.ah.master.timetrack.ErrorReporting.ErrorHandle
 import com.prasunmondal.ah.master.timetrack.SheetUtils.ToSheets
 import com.prasunmondal.ah.master.timetrack.Utility.LogActions
+import com.prasunmondal.ah.master.timetrack.sessionData.AppContext
 import com.prasunmondal.lib.android.deviceinfo.Device
 import com.prasunmondal.lib.android.deviceinfo.DeviceInfo
 import com.prasunmondal.lib.android.deviceinfo.InstalledApps
@@ -37,6 +38,7 @@ class WelcomeScreen : AppCompatActivity() {
     private fun initiallize() {
         // Get Device_toBeRemoved Info initiallization
         DeviceInfo.setContext(applicationContext, contentResolver)
+        AppContext.instance.initialContext = this
 
         ToSheets.logs.updatePrependList(
             listOf(

@@ -36,16 +36,16 @@ import com.prasunmondal.ah.master.timetrack.FileManagerUtil.Singleton.instance a
 
 class TransactionRecord {
 
-    lateinit var name: String
+    lateinit var addedBy: String
     lateinit var customerName: String
     lateinit var contactNo: String
     lateinit var qty: String
-    lateinit var price: String
-    lateinit var createTime: String
-    lateinit var time: String
+    lateinit var totalPrice: String
+    lateinit var recordGenerationTime: String
+    lateinit var data: String
     lateinit var transactionType: String
-    lateinit var userDebit: String
-    lateinit var userCredit: String
+    lateinit var totalCost: String
+    lateinit var rate: String
 }
 
 class Tabs {
@@ -378,13 +378,13 @@ class TransactionsListing : AppCompatActivity() {
         showPrices_textNColor(price1, transaction, price1_getText(tabType, transaction))
         showPrices_textNColor(price2, transaction, price2_getText(tabType, transaction))
         recordOriginDetailsField.text =
-            "+ " + get1word(transaction.name) + " . " + transaction.createTime.split(" ")[0]
+            "+ " + get1word(transaction.addedBy) + " . " + transaction.recordGenerationTime.split(" ")[0]
         if (current_cardType == cardType_minimal)
             sharedBy.text = ""
         else if (current_cardType == cardType_relevant)
             sharedBy.text = get1word(transaction.contactNo)
         else
-            sharedBy.text = transaction.time + " . " + get1word(transaction.contactNo)
+            sharedBy.text = transaction.data + " . " + get1word(transaction.contactNo)
 
 
         val llh1 = LinearLayout(applicationContext)
@@ -421,13 +421,13 @@ class TransactionsListing : AppCompatActivity() {
         itemNameField.setTextColor(getColor_text1(tabType, transaction))
 
         if (tabType == Tabs.Singleton.instance.Tab_MyTransaction)
-            return transaction.userDebit.toDouble() - transaction.userCredit.toDouble()
+            return transaction.totalCost.toDouble() - transaction.rate.toDouble()
         if (tabType == Tabs.Singleton.instance.Tab_MySpent)
-            return transaction.userCredit.toDouble()
+            return transaction.rate.toDouble()
         if (tabType == Tabs.Singleton.instance.Tab_MyExpenses)
-            return transaction.userDebit.toDouble()
+            return transaction.totalCost.toDouble()
         if (tabType == Tabs.Singleton.instance.Tab_showAll)
-            return transaction.price.toDouble()
+            return transaction.totalPrice.toDouble()
         return 0.0
     }
 
@@ -445,7 +445,7 @@ class TransactionsListing : AppCompatActivity() {
     private val username = LocalConfig.Singleton.instance.getValue("username")!!
 
     private fun isCreditTransaction(transaction: TransactionRecord): Boolean {
-        return transaction.name.contains(username)
+        return transaction.addedBy.contains(username)
     }
 
     private fun isDebitTransaction(transaction: TransactionRecord): Boolean {
@@ -556,16 +556,16 @@ class TransactionsListing : AppCompatActivity() {
                 fetchDatafromFile()
                 when (activeTab) {
                     Tabs.Singleton.instance.Tab_showAll -> {
-                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.price.toFloat() }
+                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.totalPrice.toFloat() }
                     }
                     Tabs.Singleton.instance.Tab_MyTransaction -> {
-                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.userDebit.toFloat() }
+                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.totalCost.toFloat() }
                     }
                     Tabs.Singleton.instance.Tab_MyExpenses -> {
-                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.userDebit.toFloat() }
+                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.totalCost.toFloat() }
                     }
                     Tabs.Singleton.instance.Tab_MySpent -> {
-                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.userCredit.toFloat() }
+                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.rate.toFloat() }
                     }
                 }
             }
@@ -574,16 +574,16 @@ class TransactionsListing : AppCompatActivity() {
                 TransactionsManager.Singleton.instance.transactions.reverse()
                 when (activeTab) {
                     Tabs.Singleton.instance.Tab_showAll -> {
-                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.price.toFloat() }
+                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.totalPrice.toFloat() }
                     }
                     Tabs.Singleton.instance.Tab_MyTransaction -> {
-                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.userDebit.toFloat() }
+                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.totalCost.toFloat() }
                     }
                     Tabs.Singleton.instance.Tab_MyExpenses -> {
-                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.userDebit.toFloat() }
+                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.totalCost.toFloat() }
                     }
                     Tabs.Singleton.instance.Tab_MySpent -> {
-                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.userCredit.toFloat() }
+                        TransactionsManager.Singleton.instance.transactions.sortBy { t -> t.rate.toFloat() }
                     }
                 }
                 TransactionsManager.Singleton.instance.transactions.reverse()
@@ -691,11 +691,11 @@ class TransactionsListing : AppCompatActivity() {
         val pre = "₹ "
         when (priceType) {
             priceType_CREDIT -> {
-                textView.text = pre + round2Decimal(transaction.userCredit)
+                textView.text = pre + round2Decimal(transaction.rate)
                 textView.setTextColor(resources.getColor(R.color.cardsColor_credit))
             }
             priceType_DEBIT -> {
-                textView.text = pre + round2Decimal(transaction.userDebit)
+                textView.text = pre + round2Decimal(transaction.totalCost)
                 if (isDebitTransaction(transaction))
                     textView.setTextColor(resources.getColor(R.color.cardsColor_debit))
                 else {
@@ -703,7 +703,7 @@ class TransactionsListing : AppCompatActivity() {
                 }
             }
             priceType_TOTAL -> {
-                textView.text = pre + round2Decimal(transaction.price)
+                textView.text = pre + round2Decimal(transaction.totalPrice)
                 textView.setTextColor(resources.getColor(R.color.notInvolvedTextColorRow1))
             }
             priceType_NONE -> {
@@ -851,6 +851,7 @@ class TransactionsListing : AppCompatActivity() {
 
     private fun fetchDatafromFile() {
         try {
+            println("fetching data")
             TransactionsManager.Singleton.instance.transactions = mutableListOf()
             FileReadUtil.Singleton.instance.printCSVfile(fm.downloadLink_CalculatingSheet)
         } catch (e: java.lang.Exception) {

@@ -39,7 +39,7 @@ class ViewTransaction : AppCompatActivity() {
             listOf(
                 LogActions.CLICKED.name, "Viewing Details:\n" + lc.viewTransaction.customerName
                         + " qty: " + lc.viewTransaction.qty
-                        + " price: " + lc.viewTransaction.price
+                        + " price: " + lc.viewTransaction.totalPrice
                         + " editURL: " + lc.viewTransaction.transactionType
             ),
             this.applicationContext
@@ -50,20 +50,20 @@ class ViewTransaction : AppCompatActivity() {
         findViewById<TextView>(R.id.details_qty).text = "Quantity: " + lc.viewTransaction.qty
 
         findViewById<TextView>(R.id.details_totalPrice).text =
-            "Total Price: ₹ " + lc.viewTransaction.price
+            "Total Price: ₹ " + lc.viewTransaction.totalPrice
 
         findViewById<TextView>(R.id.details_sharedBy).text =
             "Shared By: " + get1word(lc.viewTransaction.contactNo)
 
         findViewById<TextView>(R.id.details_addedBy).text =
-            "added: " + lc.viewTransaction.name + "  (" + lc.viewTransaction.createTime + ")"
+            "added: " + lc.viewTransaction.addedBy + "  (" + lc.viewTransaction.recordGenerationTime + ")"
 
         findViewById<TextView>(R.id.details_credit).text =
-            "Your Credit: ₹ " + lc.viewTransaction.userCredit
+            "Your Credit: ₹ " + lc.viewTransaction.rate
         findViewById<TextView>(R.id.details_credit).setTextColor(resources.getColor(R.color.cardsColor_credit))
 
         findViewById<TextView>(R.id.details_debit).text =
-            "Your Debit: ₹ " + round2Decimal(lc.viewTransaction.userDebit)
+            "Your Debit: ₹ " + round2Decimal(lc.viewTransaction.totalCost)
         findViewById<TextView>(R.id.details_debit).setTextColor(resources.getColor(R.color.cardsColor_debit))
 
         val webView: WebView = findViewById(R.id.editBrowser)
