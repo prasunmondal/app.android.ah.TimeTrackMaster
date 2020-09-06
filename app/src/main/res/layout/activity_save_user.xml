@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".SaveUser">
+
+    <Spinner
+        android:id="@+id/userNameSelection"
+        android:layout_width="320dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="40dp"
+        android:background="#35383A"
+        android:ems="10"
+        android:entries="@array/member_names"
+        android:fadingEdge="horizontal|vertical"
+        android:forceDarkAllowed="true"
+        android:popupBackground="#61666B"
+        android:prompt="@string/app_name"
+        android:textColor="#1a73e8"
+        android:textColorHint="#292828"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/saveuser_saveButton"
+        android:layout_width="98dp"
+        android:layout_height="53dp"
+        android:background="#000000"
+        android:onClick="onClickSaveUsername"
+        android:text="Save"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="@+id/userNameSelection"
+        app:layout_constraintTop_toBottomOf="@+id/userNameSelection" />
+
+    <TextView
+        android:id="@+id/saveuser_skipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:onClick="onClickSaveUserSkipButton"
+        android:text="Later"
+        android:textAlignment="viewStart"
+        android:textColor="#A8A5A5"
+        app:layout_constraintBottom_toBottomOf="@+id/saveuser_saveButton"
+        app:layout_constraintEnd_toStartOf="@+id/saveuser_saveButton"
+        app:layout_constraintTop_toTopOf="@+id/saveuser_saveButton" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="245dp"
+        android:layout_height="309dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:srcCompat="@drawable/start_logo" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.426" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
