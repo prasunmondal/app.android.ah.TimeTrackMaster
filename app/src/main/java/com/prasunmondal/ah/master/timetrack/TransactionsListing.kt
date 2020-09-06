@@ -32,6 +32,7 @@ import com.prasunmondal.lib.android.downloadfile.DownloadableFiles
 import kotlinx.android.synthetic.main.activity_transactions_listing.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import kotlin.math.abs
 import com.prasunmondal.ah.master.timetrack.FileManagerUtil.Singleton.instance as fm
 
 class TransactionRecord {
@@ -69,9 +70,9 @@ class Tabs {
 @Suppress("DEPRECATION")
 class TransactionsListing : AppCompatActivity() {
 
-    private val priceType_CREDIT = "priceType_CREDIT"
+    private val priceType_RATE = "priceType_CREDIT"
     private val priceType_DEBIT = "priceType_DEBIT"
-    private val priceType_TOTAL = "priceType_TOTAL"
+    private val priceType_CREDIT = "priceType_TOTAL"
     private val priceType_NONE = "priceType_NONE"
 
     private val label_DownloadingData = "Downloading Data..."
@@ -243,10 +244,10 @@ class TransactionsListing : AppCompatActivity() {
                 }
             }
             totalField2.text =
-                totalString + "₹ ${round2Decimal(sum.toString())}    |    ${i - 1} items"
+                totalString + "₹ ${stringAbsolute(round2Decimal(sum.toString()))}    |    ${i - 1} items"
             if (tabType == Tabs.Singleton.instance.Tab_MyTransaction && !current_showDecimal)
                 totalField2.text =
-                    totalString + "₹ ${roundInt(sum.toString())}    |    ${i - 1} items"
+                    totalString + "₹ ${stringAbsolute(roundInt(sum.toString()))}    |    ${i - 1} items"
         }
 
 
@@ -421,9 +422,9 @@ class TransactionsListing : AppCompatActivity() {
         itemNameField.setTextColor(getColor_text1(tabType, transaction))
 
         if (tabType == Tabs.Singleton.instance.Tab_MyTransaction)
-            return transaction.totalCost.toDouble() - transaction.rate.toDouble()
+            return transaction.totalCost.toDouble()
         if (tabType == Tabs.Singleton.instance.Tab_MySpent)
-            return transaction.rate.toDouble()
+            return transaction.totalCost.toDouble()
         if (tabType == Tabs.Singleton.instance.Tab_MyExpenses)
             return transaction.totalCost.toDouble()
         if (tabType == Tabs.Singleton.instance.Tab_showAll)
@@ -445,11 +446,11 @@ class TransactionsListing : AppCompatActivity() {
     private val username = LocalConfig.Singleton.instance.getValue("username")!!
 
     private fun isCreditTransaction(transaction: TransactionRecord): Boolean {
-        return transaction.addedBy.contains(username)
+        return transaction.transactionType == "CREDIT"
     }
 
     private fun isDebitTransaction(transaction: TransactionRecord): Boolean {
-        return transaction.contactNo.contains(username) || transaction.contactNo.contains("All")
+        return transaction.transactionType == "DEBIT"
     }
 
     private fun showAll(transaction: TransactionRecord): Boolean {
@@ -645,7 +646,7 @@ class TransactionsListing : AppCompatActivity() {
             Tabs.Singleton.instance.Tab_showAll -> {
                 if (isCreditTransaction(transaction))
                     return priceType_CREDIT
-                return priceType_TOTAL
+                return priceType_DEBIT
             }
             Tabs.Singleton.instance.Tab_MyExpenses -> {
                 return priceType_DEBIT
@@ -654,32 +655,30 @@ class TransactionsListing : AppCompatActivity() {
                 return priceType_CREDIT
             }
             Tabs.Singleton.instance.Tab_MyTransaction -> {
+                if (isCreditTransaction(transaction))
+                    return priceType_CREDIT
                 return priceType_DEBIT
             }
         }
-        return priceType_TOTAL
+        return priceType_CREDIT
     }
 
     private fun price2_getText(tabType: String, transaction: TransactionRecord): String {
         when (tabType) {
             Tabs.Singleton.instance.Tab_showAll -> {
-                return priceType_DEBIT
+                return priceType_RATE
             }
             Tabs.Singleton.instance.Tab_MyExpenses -> {
-                if (isCreditTransaction(transaction))
-                    return priceType_CREDIT
-                return priceType_TOTAL
+                return priceType_RATE
             }
             Tabs.Singleton.instance.Tab_MySpent -> {
-                return priceType_DEBIT
+                return priceType_RATE
             }
             Tabs.Singleton.instance.Tab_MyTransaction -> {
-                if (isCreditTransaction(transaction))
-                    return priceType_CREDIT
-                return priceType_TOTAL
+                return priceType_RATE
             }
         }
-        return priceType_TOTAL
+        return priceType_RATE
     }
 
     @SuppressLint("SetTextI18n")
@@ -690,26 +689,26 @@ class TransactionsListing : AppCompatActivity() {
     ) {
         val pre = "₹ "
         when (priceType) {
-            priceType_CREDIT -> {
+            priceType_RATE -> {
                 textView.text = pre + round2Decimal(transaction.rate)
-                textView.setTextColor(resources.getColor(R.color.cardsColor_credit))
+                textView.setTextColor(resources.getColor(R.color.notInvolvedTextColorRow1))
             }
             priceType_DEBIT -> {
                 textView.text = pre + round2Decimal(transaction.totalCost)
-                if (isDebitTransaction(transaction))
-                    textView.setTextColor(resources.getColor(R.color.cardsColor_debit))
-                else {
-                    textView.setTextColor(resources.getColor(R.color.notInvolvedTextColorRow1))
-                }
+                textView.setTextColor(resources.getColor(R.color.cardsColor_debit))
             }
-            priceType_TOTAL -> {
-                textView.text = pre + round2Decimal(transaction.totalPrice)
-                textView.setTextColor(resources.getColor(R.color.notInvolvedTextColorRow1))
+            priceType_CREDIT -> {
+                textView.text = pre + stringAbsolute((round2Decimal(transaction.totalPrice)))
+                textView.setTextColor(resources.getColor(R.color.cardsColor_credit))
             }
             priceType_NONE -> {
                 textView.text = ""
             }
         }
+    }
+
+    private fun stringAbsolute(round2Decimal: String): Any? {
+        return round2Decimal.replace("-","")
     }
 
     private fun goToViewTransaction(transaction: TransactionRecord) {
