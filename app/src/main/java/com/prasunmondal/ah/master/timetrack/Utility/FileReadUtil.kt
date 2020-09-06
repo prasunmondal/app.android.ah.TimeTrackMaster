@@ -69,7 +69,7 @@ class FileReadUtil {
 
                     newRecord.addedBy = nextLine[13]
                     newRecord.customerName = nextLine[2]
-                    newRecord.contactNo = nextLine[3]
+                    newRecord.contactNo = nextLine[8]
                     newRecord.qty = "qty"
                     newRecord.totalPrice = nextLine[10]
                     newRecord.recordGenerationTime = nextLine[1]
