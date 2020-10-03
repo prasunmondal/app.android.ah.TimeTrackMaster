@@ -217,45 +217,49 @@ class AppBrowser : AppCompatActivity() {
     fun updateButtonData() {
         val payBillBtn = findViewById<Button>(R.id.pay_bill_btn)
         var showString: String
-        if (PaymentUtil.Singleton.instance.isAmountButtonVisible()) {
-            val currentUser =
-                LocalConfig.Singleton.instance.getValue(LocalConfig.Singleton.instance.USERNAME)!!
-                    .toLowerCase()
-            val payBill = PaymentUtil.Singleton.instance.getPendingBill(currentUser)
-            val outstandingBal = PaymentUtil.Singleton.instance.getOutstandingAmount(currentUser)
-
-            if (payBill != null) {
-                if (payBill.toInt() > 0) {
-                    showString = "Due: ₹ $payBill"
-                    showString += "\n(click to pay)"
-                    payBillBtn.backgroundTintList =
-                        ColorStateList.valueOf(resources.getColor(R.color.infoBtn_paymentDue_bkg))
-                    payBillBtn.setTextColor(resources.getColor(R.color.infoBtn_paymentDue_txt))
-                } else {
-                    showString = "You Get\n₹ " + (-1 * payBill.toInt()).toString()
-                    payBillBtn.backgroundTintList =
+//        if (PaymentUtil.Singleton.instance.isAmountButtonVisible()) {
+//            val currentUser =
+//                LocalConfig.Singleton.instance.getValue(LocalConfig.Singleton.instance.USERNAME)!!
+//                    .toLowerCase()
+//            val payBill = PaymentUtil.Singleton.instance.getPendingBill(currentUser)
+//            val outstandingBal = PaymentUtil.Singleton.instance.getOutstandingAmount(currentUser)
+//
+//            if (payBill != null) {
+//                if (payBill.toInt() > 0) {
+//                    showString = "Due: ₹ $payBill"
+//                    showString += "\n(click to pay)"
+//                    payBillBtn.backgroundTintList =
+//                        ColorStateList.valueOf(resources.getColor(R.color.infoBtn_paymentDue_bkg))
+//                    payBillBtn.setTextColor(resources.getColor(R.color.infoBtn_paymentDue_txt))
+//                } else {
+//                    showString = "You Get\n₹ " + (-1 * payBill.toInt()).toString()
+//                    payBillBtn.backgroundTintList =
+//                        ColorStateList.valueOf(resources.getColor(R.color.infoBtn_YouGet_bkg))
+//                    payBillBtn.setTextColor(resources.getColor(R.color.infoBtn_YouGet_txt))
+//                }
+//            } else if (outstandingBal != null) {
+//                showString = "Outstanding Bal\n₹ $outstandingBal"
+//                if (outstandingBal.toInt() > 0) {
+//                    payBillBtn.backgroundTintList =
+//                        ColorStateList.valueOf(resources.getColor(R.color.infoBtn_OutstandingPositive_bkg))
+//                    payBillBtn.setTextColor(resources.getColor(R.color.infoBtn_OutstandingPositive_txt))
+//                } else {
+//                    payBillBtn.backgroundTintList =
+//                        ColorStateList.valueOf(resources.getColor(R.color.infoBtn_OutstandingNegative_bkg))
+//                    payBillBtn.setTextColor(resources.getColor(R.color.infoBtn_OutstandingNegative_txt))
+//                }
+//            } else {
+//                showString = "Couldn't fetch data..."
+//            }
+//        } else {
+//            showString = "No User Configured..."
+//        }
+        showString = "Tech4Bytes!"
+        payBillBtn.backgroundTintList =
                         ColorStateList.valueOf(resources.getColor(R.color.infoBtn_YouGet_bkg))
                     payBillBtn.setTextColor(resources.getColor(R.color.infoBtn_YouGet_txt))
-                }
-            } else if (outstandingBal != null) {
-                showString = "Outstanding Bal\n₹ $outstandingBal"
-                if (outstandingBal.toInt() > 0) {
-                    payBillBtn.backgroundTintList =
-                        ColorStateList.valueOf(resources.getColor(R.color.infoBtn_OutstandingPositive_bkg))
-                    payBillBtn.setTextColor(resources.getColor(R.color.infoBtn_OutstandingPositive_txt))
-                } else {
-                    payBillBtn.backgroundTintList =
-                        ColorStateList.valueOf(resources.getColor(R.color.infoBtn_OutstandingNegative_bkg))
-                    payBillBtn.setTextColor(resources.getColor(R.color.infoBtn_OutstandingNegative_txt))
-                }
-            } else {
-                showString = "Couldn't fetch data..."
-            }
-        } else {
-            showString = "No User Configured..."
-        }
         ToSheets.logs.post(
-            listOf(LogActions.DISPLAY.name, "Dashboard::\n$showString"),
+            listOf(LogActions.DISPLAY.name, showString),
             applicationContext
         )
         payBillBtn.text = showString
