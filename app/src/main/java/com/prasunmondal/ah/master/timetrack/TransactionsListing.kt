@@ -195,7 +195,7 @@ class TransactionsListing : AppCompatActivity() {
         var list = mutableListOf("All")
         list.addAll(TransactionsManager.Singleton.instance.customers)
         val dataAdapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_item, list)
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, list.distinct())
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         dropdown.adapter = dataAdapter
     }
