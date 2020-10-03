@@ -7,11 +7,13 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.prasunmondal.ah.master.timetrack.ErrorReporting.ErrorHandle
 import com.prasunmondal.ah.master.timetrack.SheetUtils.ToSheets
+import com.prasunmondal.ah.master.timetrack.Utility.CommonUtils
 import com.prasunmondal.ah.master.timetrack.Utility.LogActions
 import com.prasunmondal.ah.master.timetrack.sessionData.AppContext
 import com.prasunmondal.lib.android.deviceinfo.Device
 import com.prasunmondal.lib.android.deviceinfo.DeviceInfo
 import com.prasunmondal.lib.android.deviceinfo.InstalledApps
+import com.prasunmondal.lib.posttogsheets.PostToGSheet
 import java.util.*
 
 
@@ -40,14 +42,56 @@ class WelcomeScreen : AppCompatActivity() {
         DeviceInfo.setContext(applicationContext, contentResolver)
         AppContext.instance.initialContext = this
 
-        ToSheets.logs.updatePrependList(
-            listOf(
-                "MasterTrack",
-                BuildConfig.VERSION_CODE.toString(),
-                DeviceInfo.get(Device.UNIQUE_ID),
-                ""
+        val currentLogsSheet: String
+        val currentErrorsSheet: String
+
+        val currentLogsTab: String
+        val currentErrorsTab: String
+
+        val currentCopyTemplate = ""
+
+        if(CommonUtils().isDevEnv()) {
+            currentLogsSheet = ToSheets.devLogs_sheet
+            currentErrorsSheet = ToSheets.devErrors_sheet
+
+            currentLogsTab = ToSheets.devLogs_tab
+            currentErrorsTab = ToSheets.devErrors_tab
+        } else {
+            currentLogsSheet = ToSheets.userLogs_sheet
+            currentErrorsSheet = ToSheets.userErrors_sheet
+
+            currentLogsTab = ToSheets.userLogs_tab
+            currentErrorsTab = ToSheets.userErrors_tab
+        }
+
+        ToSheets.logs =
+            PostToGSheet(
+                ToSheets.googleScript_scriptURL,
+                currentLogsSheet,
+                currentLogsTab,
+                currentCopyTemplate,
+                "template",
+                true, listOf(CommonUtils.appName, BuildConfig.VERSION_CODE.toString(), DeviceInfo.get(Device.UNIQUE_ID), "")
             )
-        )
+
+        ToSheets.errors =
+            PostToGSheet(
+                ToSheets.googleScript_scriptURL,
+                currentErrorsSheet,
+                currentErrorsTab,
+                currentCopyTemplate,
+                "template",
+                true, listOf(CommonUtils.appName, BuildConfig.VERSION_CODE.toString(), DeviceInfo.get(Device.UNIQUE_ID), "")
+            )
+
+//        ToSheets.logs.updatePrependList(
+//            listOf(
+//                "MasterTrack",
+//                BuildConfig.VERSION_CODE.toString(),
+//                DeviceInfo.get(Device.UNIQUE_ID),
+//                ""
+//            )
+//        )
         ToSheets.logs.post(listOf(LogActions.APP_OPENED.name), applicationContext)
 
         object : AsyncTask<Void?, Void?, Boolean?>() {

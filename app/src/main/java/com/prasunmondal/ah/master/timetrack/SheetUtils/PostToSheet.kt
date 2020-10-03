@@ -5,32 +5,27 @@ import com.prasunmondal.lib.posttogsheets.PostToGSheet
 class ToSheets private constructor() {
     companion object {
 
-        val prodLogsSheet =
-            "https://docs.google.com/spreadsheets/d/1qacLjDP01fA5xxo1RNI9oGDyP6iknMQyIOPx24brJlA/edit#gid=0"
-        val devLogsSheet =
-            "https://docs.google.com/spreadsheets/d/13igDHoEGBO5dbDXYX-1y9pdiO1eSaZZgZu2LhaXep9E/edit#gid=0"
 
-        val currentEnvSheet = prodLogsSheet
+        const val googleScript_scriptURL =
+            "https://script.google.com/macros/s/AKfycbyoYcCSDEbXuDuGf0AhQjEi61ECAkl8JUv4ffNofz1yBIKfcT4/exec"
 
-        val logs: PostToGSheet =
-            PostToGSheet(
-                "https://script.google.com/macros/s/AKfycbyoYcCSDEbXuDuGf0AhQjEi61ECAkl8JUv4ffNofz1yBIKfcT4/exec",
-                currentEnvSheet,
-                "logsRepo",
-                "https://docs.google.com/spreadsheets/d/1qacLjDP01fA5xxo1RNI9oGDyP6iknMQyIOPx24brJlA/edit#gid=0",
-                "template",
-                true, null
-            )
+        private const val devDB: String = "https://docs.google.com/spreadsheets/d/1CvGQnFZL9YpUm1Ws_PtKFW_K8NVmm3OpEUZTwmfT4DA/edit#gid=0"
+        private const val userDB: String = "https://docs.google.com/spreadsheets/d/1gZA5tqllOArlLJb2nLcmLqfNR-cdgFzNqTl9ZKyzcOI/edit#gid=0"
 
-        val error: PostToGSheet =
-            PostToGSheet(
-                "https://script.google.com/macros/s/AKfycbyoYcCSDEbXuDuGf0AhQjEi61ECAkl8JUv4ffNofz1yBIKfcT4/exec",
-                currentEnvSheet,
-                "errorsRepo",
-                "https://docs.google.com/spreadsheets/d/1qacLjDP01fA5xxo1RNI9oGDyP6iknMQyIOPx24brJlA/edit#gid=0",
-                "template",
-                true, null
-            )
+        // user profile
+        const val userLogs_sheet = devDB
+        const val userLogs_tab = "userLogs"
+        const val userErrors_sheet = devDB
+        const val userErrors_tab = "userErrors"
+
+        // dev profile
+        const val devLogs_sheet = devDB
+        const val devLogs_tab = "devLogs"
+        const val devErrors_sheet = devDB
+        const val devErrors_tab = "devErrors"
+
+        lateinit var logs: PostToGSheet
+        lateinit var errors: PostToGSheet
     }
 
     fun skipPost(): Boolean {

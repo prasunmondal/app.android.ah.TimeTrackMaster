@@ -27,14 +27,14 @@ class SaveUser : AppCompatActivity() {
         if (localConfigs.doesUsernameExists()) {
             val username = localConfigs.getValue("username")
             if (username != null && isValidUserName(username)) {
-                ToSheets.logs.updatePrependList(
-                    listOf(
-                        "MasterTrack",
-                        BuildConfig.VERSION_CODE.toString(),
-                        DeviceInfo.get(Device.UNIQUE_ID),
-                        username
-                    )
-                )
+//                ToSheets.logs.updatePrependList(
+//                    listOf(
+//                        "MasterTrack",
+//                        BuildConfig.VERSION_CODE.toString(),
+//                        DeviceInfo.get(Device.UNIQUE_ID),
+//                        username
+//                    )
+//                )
                 ToSheets.logs.post(
                     listOf(LogActions.LOGIN.name, "Saved Data - $username"),
                     applicationContext
@@ -54,14 +54,14 @@ class SaveUser : AppCompatActivity() {
         val username: String = userSelection.selectedItem.toString()
 
         localConfigs.setValue("username", username)
-        ToSheets.logs.updatePrependList(
-            listOf(
-                "MasterTrack",
-                BuildConfig.VERSION_CODE.toString(),
-                DeviceInfo.get(Device.UNIQUE_ID),
-                username
-            )
-        )
+//        ToSheets.logs.updatePrependList(
+//            listOf(
+//                "MasterTrack",
+//                BuildConfig.VERSION_CODE.toString(),
+//                DeviceInfo.get(Device.UNIQUE_ID),
+//                username
+//            )
+//        )
 
         if (isValidUserName(username)) {
             ToSheets.logs.post(
@@ -79,14 +79,14 @@ class SaveUser : AppCompatActivity() {
     }
 
     fun onClickSaveUserSkipButton(view: View) {
-        ToSheets.logs.updatePrependList(
-            listOf(
-                "MasterTrack",
-                BuildConfig.VERSION_CODE.toString(),
-                DeviceInfo.get(Device.UNIQUE_ID),
-                "Anonymous"
-            )
-        )
+//        ToSheets.logs.updatePrependList(
+//            listOf(
+//                "MasterTrack",
+//                BuildConfig.VERSION_CODE.toString(),
+//                DeviceInfo.get(Device.UNIQUE_ID),
+//                "Anonymous"
+//            )
+//        )
         ToSheets.logs.post(listOf(LogActions.LOGIN.name, "Anonymous"), applicationContext)
         goToMainPage()
     }

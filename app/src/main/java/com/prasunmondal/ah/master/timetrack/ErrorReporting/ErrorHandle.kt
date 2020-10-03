@@ -24,7 +24,7 @@ class ErrorHandle {
                         paramThrowable.printStackTrace(pw)
                         val sStackTrace: String = sw.toString() // stack trace as a string
 
-                        ToSheets.error.post(
+                        ToSheets.errors.post(
                             listOf(
                                 "MasterTrack",
                                 BuildConfig.VERSION_CODE.toString(),

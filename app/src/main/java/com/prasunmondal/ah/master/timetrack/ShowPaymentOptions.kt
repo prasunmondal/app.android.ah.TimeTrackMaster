@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.prasunmondal.ah.master.timetrack.ErrorReporting.ErrorHandle
 import com.prasunmondal.ah.master.timetrack.SheetUtils.ToSheets
 import com.prasunmondal.ah.master.timetrack.Utility.LogActions
-import com.prasunmondal.ah.master.timetrack.R
 import com.prasunmondal.ah.master.timetrack.sessionData.FetchedMetaData.Singleton.instance as fetchedMetaDatas
 
 

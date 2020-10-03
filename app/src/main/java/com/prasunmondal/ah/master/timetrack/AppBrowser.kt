@@ -122,7 +122,7 @@ class AppBrowser : AppCompatActivity() {
     }
 
     fun loadAddForm(view: View) {
-        ToSheets.logs.post(listOf(LogActions.CLICKED.name, "Add Expense"), applicationContext)
+        ToSheets.logs.post(listOf(LogActions.CLICKED.name, "Add Customer"), applicationContext)
         loadPage(HardData.Singleton.instance.client_submitFormURL)
     }
 
@@ -402,13 +402,13 @@ class AppBrowser : AppCompatActivity() {
         val id: Int = item.itemId
         if (id == R.id.action_favorite) {
             ToSheets.logs.post(LogActions.LOGOUT.name, applicationContext)
-            ToSheets.logs.updatePrependList(
-                listOf(
-                    "MasterTrack", BuildConfig.VERSION_CODE.toString(), DeviceInfo.get(
-                        Device.UNIQUE_ID
-                    ), ""
-                )
-            )
+//            ToSheets.logs.updatePrependList(
+//                listOf(
+//                    "MasterTrack", BuildConfig.VERSION_CODE.toString(), DeviceInfo.get(
+//                        Device.UNIQUE_ID
+//                    ), ""
+//                )
+//            )
             goToSaveUserPage()
             return true
         }

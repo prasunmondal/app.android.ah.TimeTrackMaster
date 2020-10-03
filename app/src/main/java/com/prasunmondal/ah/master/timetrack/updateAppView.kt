@@ -17,7 +17,6 @@ import androidx.core.content.FileProvider
 import com.prasunmondal.ah.master.timetrack.ErrorReporting.ErrorHandle
 import com.prasunmondal.ah.master.timetrack.SheetUtils.ToSheets
 import com.prasunmondal.ah.master.timetrack.Utility.LogActions
-import com.prasunmondal.ah.master.timetrack.FileManagerUtil
 import com.prasunmondal.ah.master.timetrack.sessionData.FetchedMetaData
 import com.prasunmondal.lib.android.downloadfile.DownloadableFiles
 import kotlinx.android.synthetic.main.activity_update_app_view.*
