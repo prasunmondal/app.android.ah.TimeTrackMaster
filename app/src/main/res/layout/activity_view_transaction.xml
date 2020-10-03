@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="Prasun Mondal"
+            android:text="Ananta Hazra"
             android:textColor="@color/tabs_text_inactive" />
 
     </androidx.appcompat.widget.Toolbar>
