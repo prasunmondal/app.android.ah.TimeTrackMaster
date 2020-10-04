@@ -97,6 +97,9 @@ class AppBrowser : AppCompatActivity() {
         updateButtonData()
         val button = findViewById<FloatingActionButton>(R.id.showBreakdowns)
         button.show()
+
+        val creditButton = findViewById<FloatingActionButton>(R.id.detailsButton)
+        creditButton.show()
         if (!LocalConfig.Singleton.instance.doesUsernameExists()) {
             button.setOnClickListener {
                 showToast()
