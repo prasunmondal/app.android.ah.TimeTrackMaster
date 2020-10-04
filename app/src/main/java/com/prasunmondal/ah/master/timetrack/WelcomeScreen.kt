@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.prasunmondal.ah.master.timetrack.ErrorReporting.ErrorHandle
 import com.prasunmondal.ah.master.timetrack.SheetUtils.ToSheets
 import com.prasunmondal.ah.master.timetrack.Utility.CommonUtils
 import com.prasunmondal.ah.master.timetrack.Utility.LogActions
 import com.prasunmondal.ah.master.timetrack.sessionData.AppContext
+import com.prasunmondal.ah.master.timetrack.sessionData.FetchedMetaData
 import com.prasunmondal.lib.android.deviceinfo.Device
 import com.prasunmondal.lib.android.deviceinfo.DeviceInfo
 import com.prasunmondal.lib.android.deviceinfo.InstalledApps
@@ -53,6 +55,7 @@ class WelcomeScreen : AppCompatActivity() {
         val currentCopyTemplate = ""
 
         if(CommonUtils().isDevEnv()) {
+            Toast.makeText(this, "Dev Environment", Toast.LENGTH_LONG).show()
             currentLogsSheet = ToSheets.devLogs_sheet
             currentErrorsSheet = ToSheets.devErrors_sheet
             currentAddTransactionSheet = ToSheets.devAddTransactionSheet
@@ -60,6 +63,8 @@ class WelcomeScreen : AppCompatActivity() {
             currentLogsTab = ToSheets.devLogs_tab
             currentErrorsTab = ToSheets.devErrors_tab
             currentAddTransactionTab = ToSheets.devAddTransactionTab
+
+            ToSheets.breakdownCSVURL = FetchedMetaData.Singleton.instance.TAG_BREAKDOWN_URL_TEST
         } else {
             currentLogsSheet = ToSheets.userLogs_sheet
             currentErrorsSheet = ToSheets.userErrors_sheet
@@ -68,6 +73,8 @@ class WelcomeScreen : AppCompatActivity() {
             currentLogsTab = ToSheets.userLogs_tab
             currentErrorsTab = ToSheets.userErrors_tab
             currentAddTransactionTab = ToSheets.userAddTransactionTab
+
+            ToSheets.breakdownCSVURL = FetchedMetaData.Singleton.instance.TAG_BREAKDOWN_URL_ACTUAL
         }
 
         ToSheets.logs =

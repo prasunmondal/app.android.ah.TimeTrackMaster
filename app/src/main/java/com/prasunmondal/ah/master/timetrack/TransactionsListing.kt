@@ -22,12 +22,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.prasunmondal.ah.master.timetrack.ErrorReporting.ErrorHandle
 import com.prasunmondal.ah.master.timetrack.SheetUtils.ToSheets
+import com.prasunmondal.ah.master.timetrack.Utility.CommonUtils
 import com.prasunmondal.ah.master.timetrack.Utility.FileReadUtil
 import com.prasunmondal.ah.master.timetrack.Utility.LogActions
 import com.prasunmondal.ah.master.timetrack.sessionData.AppContext
 import com.prasunmondal.ah.master.timetrack.sessionData.FetchedMetaData
 import com.prasunmondal.ah.master.timetrack.sessionData.LocalConfig
 import com.prasunmondal.lib.android.downloadfile.DownloadableFiles
+import com.prasunmondal.lib.posttogsheets.PostToGSheet
 import kotlinx.android.synthetic.main.activity_transactions_listing.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -96,7 +98,7 @@ class TransactionsListing : AppCompatActivity() {
     private var customerList = mutableListOf<String>()
 
     val breakdownSheet = DownloadableFiles(
-        FetchedMetaData.Singleton.instance.getValue(FetchedMetaData.Singleton.instance.TAG_BREAKDOWN_URL)!!,
+        FetchedMetaData.Singleton.instance.getValue(ToSheets.breakdownCSVURL)!!,
         "",
         "calculatingSheet.csv",
         "MasterTrack",
@@ -245,7 +247,11 @@ class TransactionsListing : AppCompatActivity() {
             )
             if (result != null) {
                 i++
-                sum = result.plus(sum)
+                if (TransactionsManager.Singleton.instance.transactions[z].transactionType == "CREDIT") {
+                    sum = (-result).plus(sum)
+                }
+                else
+                    sum = result.plus(sum)
             }
         }
 
@@ -733,8 +739,10 @@ class TransactionsListing : AppCompatActivity() {
         val pre = "₹ "
         when (priceType) {
             priceType_RATE -> {
-                textView.text = pre + round2Decimal(transaction.rate)
-                textView.setTextColor(resources.getColor(R.color.notInvolvedTextColorRow1))
+                if(transaction.rate.isNotEmpty()) {
+                    textView.text = pre + round2Decimal(transaction.rate)
+                    textView.setTextColor(resources.getColor(R.color.notInvolvedTextColorRow1))
+                }
             }
             priceType_DEBIT -> {
                 textView.text = pre + round2Decimal(transaction.totalCost)
