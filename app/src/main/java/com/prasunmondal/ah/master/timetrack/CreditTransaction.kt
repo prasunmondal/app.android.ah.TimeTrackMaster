@@ -116,6 +116,7 @@ class CreditTransaction : AppCompatActivity() {
                     bottomToolbarConfig("Credit", true)
                     findViewById<View>(R.id.showDetailsPanel).visibility = View.VISIBLE
                     findViewById<TextView>(R.id.enterAmount).visibility = View.VISIBLE
+                    findViewById<TextView>(R.id.amountprelabel).visibility = View.VISIBLE
                 }
             }
         } else {
@@ -125,6 +126,7 @@ class CreditTransaction : AppCompatActivity() {
             addressView.text = ""
             findViewById<View>(R.id.showDetailsPanel).visibility = View.INVISIBLE
             findViewById<TextView>(R.id.enterAmount).visibility = View.INVISIBLE
+            findViewById<TextView>(R.id.amountprelabel).visibility = View.INVISIBLE
         }
     }
 

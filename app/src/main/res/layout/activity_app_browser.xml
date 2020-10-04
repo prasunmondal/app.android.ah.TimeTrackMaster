@@ -99,7 +99,7 @@
             app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/addButton2"
-            app:srcCompat="@drawable/details2" />
+            app:srcCompat="@drawable/addtransaction" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/showBreakdowns"
