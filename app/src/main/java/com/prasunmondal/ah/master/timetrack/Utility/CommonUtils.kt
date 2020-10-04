@@ -10,9 +10,7 @@ class CommonUtils {
     }
 
     fun isDevEnv(): Boolean {
-        if(DeviceInfo.get(Device.UNIQUE_ID) == "ffffffff-87c0-30bd-0000-000075b319f8") {
-            return true
-        }
-        return false
+        var devID = DeviceInfo.get(Device.UNIQUE_ID)
+        return (devID == "ffffffff-87c0-30bd-0000-000075b319f8" || devID == "00000000-1c29-463a-0000-000075b319f8")
     }
 }
