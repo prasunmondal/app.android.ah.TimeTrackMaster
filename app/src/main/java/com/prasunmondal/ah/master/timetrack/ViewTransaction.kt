@@ -47,10 +47,9 @@ class ViewTransaction : AppCompatActivity() {
 
         findViewById<TextView>(R.id.details_itemname).text = "Customer Name: " + lc.viewTransaction.customerName
 
-        findViewById<TextView>(R.id.details_qty).text = "Total Time: " + lc.viewTransaction.contactNo
 
-        findViewById<TextView>(R.id.details_totalPrice).text =
-            "Total Price: ₹ " + lc.viewTransaction.totalPrice
+
+
 
         findViewById<TextView>(R.id.details_sharedBy).text =
             ""
@@ -58,13 +57,34 @@ class ViewTransaction : AppCompatActivity() {
         findViewById<TextView>(R.id.details_addedBy).text =
             "added by: " + lc.viewTransaction.addedBy + "  (" + lc.viewTransaction.recordGenerationTime + ")"
 
-        findViewById<TextView>(R.id.details_credit).text =
-            "Rate: ₹ " + lc.viewTransaction.rate
-        findViewById<TextView>(R.id.details_credit).setTextColor(resources.getColor(R.color.cardsColor_credit))
 
-        findViewById<TextView>(R.id.details_debit).text =
-            "Debit: ₹ " + round2Decimal(lc.viewTransaction.totalCost)
-        findViewById<TextView>(R.id.details_debit).setTextColor(resources.getColor(R.color.cardsColor_debit))
+
+        if(lc.viewTransaction.transactionType == "CREDIT") {
+            findViewById<TextView>(R.id.details_debit).text =
+                "Credit: ₹ " + round2Decimal(lc.viewTransaction.totalCost)
+            findViewById<TextView>(R.id.details_debit).setTextColor(resources.getColor(R.color.cardsColor_credit))
+
+            findViewById<TextView>(R.id.details_credit).text = ""
+
+            findViewById<TextView>(R.id.details_qty).text = ""
+
+            findViewById<TextView>(R.id.details_totalPrice).text =
+                "Credit Amount: ₹ " + lc.viewTransaction.totalPrice
+        } else {
+            findViewById<TextView>(R.id.details_debit).text =
+                "Debit: ₹ " + round2Decimal(lc.viewTransaction.totalCost)
+            findViewById<TextView>(R.id.details_debit).setTextColor(resources.getColor(R.color.cardsColor_debit))
+
+            findViewById<TextView>(R.id.details_credit).text =
+                "Rate: ₹ " + lc.viewTransaction.rate
+            findViewById<TextView>(R.id.details_credit).setTextColor(resources.getColor(R.color.cardsColor_white))
+
+            findViewById<TextView>(R.id.details_qty).text = "Total Time: " + lc.viewTransaction.contactNo
+
+            findViewById<TextView>(R.id.details_totalPrice).text =
+                "Total Price: ₹ " + lc.viewTransaction.totalPrice
+        }
+
 
         val webView: WebView = findViewById(R.id.editBrowser)
         webView.visibility = View.GONE
