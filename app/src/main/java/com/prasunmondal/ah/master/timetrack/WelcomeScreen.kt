@@ -44,24 +44,30 @@ class WelcomeScreen : AppCompatActivity() {
 
         val currentLogsSheet: String
         val currentErrorsSheet: String
+        val currentAddTransactionSheet: String
 
         val currentLogsTab: String
         val currentErrorsTab: String
+        val currentAddTransactionTab: String
 
         val currentCopyTemplate = ""
 
         if(CommonUtils().isDevEnv()) {
             currentLogsSheet = ToSheets.devLogs_sheet
             currentErrorsSheet = ToSheets.devErrors_sheet
+            currentAddTransactionSheet = ToSheets.devAddTransactionSheet
 
             currentLogsTab = ToSheets.devLogs_tab
             currentErrorsTab = ToSheets.devErrors_tab
+            currentAddTransactionTab = ToSheets.devAddTransactionTab
         } else {
             currentLogsSheet = ToSheets.userLogs_sheet
             currentErrorsSheet = ToSheets.userErrors_sheet
+            currentAddTransactionSheet = ToSheets.userAddTransactionSheet
 
             currentLogsTab = ToSheets.userLogs_tab
             currentErrorsTab = ToSheets.userErrors_tab
+            currentAddTransactionTab = ToSheets.userAddTransactionTab
         }
 
         ToSheets.logs =
@@ -83,6 +89,15 @@ class WelcomeScreen : AppCompatActivity() {
                 "template",
                 true, listOf(CommonUtils.appName, BuildConfig.VERSION_CODE.toString(), DeviceInfo.get(Device.UNIQUE_ID), "")
             )
+
+        ToSheets.addTransaction = PostToGSheet(
+            ToSheets.googleScript_scriptURL,
+            currentAddTransactionSheet,
+            currentAddTransactionTab,
+            currentCopyTemplate,
+            "template",
+            true, null
+        )
 
 //        ToSheets.logs.updatePrependList(
 //            listOf(

@@ -127,9 +127,8 @@ class AppBrowser : AppCompatActivity() {
     }
 
     fun loadDetails(view: View) {
-        ToSheets.logs.post(listOf(LogActions.CLICKED.name, "Summary Page"), applicationContext)
-        loadPage(HardData.Singleton.instance.detailsFormViewPage)
-        Toast.makeText(this, "Fetching Data. Please Wait...", Toast.LENGTH_SHORT).show()
+        val i = Intent(this@AppBrowser, CreditTransaction::class.java)
+        startActivity(i)
     }
 
     fun loadEditPage(view: View) {

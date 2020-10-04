@@ -1,6 +1,12 @@
 package com.prasunmondal.ah.master.timetrack.SheetUtils
 
+import android.content.Context
+import com.prasunmondal.ah.master.timetrack.Models.Customer
+import com.prasunmondal.lib.android.deviceinfo.Device
+import com.prasunmondal.lib.android.deviceinfo.DeviceInfo
 import com.prasunmondal.lib.posttogsheets.PostToGSheet
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ToSheets private constructor() {
     companion object {
@@ -17,18 +23,44 @@ class ToSheets private constructor() {
         const val userLogs_tab = "userLogs"
         const val userErrors_sheet = devDB
         const val userErrors_tab = "userErrors"
+        const val userAddTransactionSheet = userDB
+        const val userAddTransactionTab = "Transactions"
 
         // dev profile
         const val devLogs_sheet = devDB
         const val devLogs_tab = "devLogs"
         const val devErrors_sheet = devDB
         const val devErrors_tab = "devErrors"
+        const val devAddTransactionSheet = devDB
+        const val devAddTransactionTab = "Transactions"
 
         lateinit var logs: PostToGSheet
         lateinit var errors: PostToGSheet
+        lateinit var addTransaction: PostToGSheet
+
+        fun creditAmount(c: Customer, amount: Long, context: Context) {
+            addTransaction.post(
+                listOf(
+                    c.name,
+                    c.phoneNumber,
+                    c.address,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    amount.toString(),
+                    "CREDIT",
+                    "ENTERED",
+                    DeviceInfo.get(Device.UNIQUE_ID)
+                ), context
+            )
+        }
     }
 
     fun skipPost(): Boolean {
         return false
     }
+
+
 }

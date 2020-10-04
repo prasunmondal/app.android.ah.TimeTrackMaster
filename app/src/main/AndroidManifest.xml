@@ -17,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CreditTransaction"
+            android:label="@string/title_activity_credit_transaction"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".WelcomeScreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="MasterTrack"

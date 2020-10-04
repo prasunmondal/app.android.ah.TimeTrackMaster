@@ -31,4 +31,5 @@
 
     <color name="welcomeScreen_background">#10181F</color>
     <color name="my_spinner_text_color">#F0F0F0</color>
+    <color name="primaryFont">#FFFFFF</color>
 </resources>
